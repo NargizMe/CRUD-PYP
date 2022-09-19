@@ -4,58 +4,63 @@ import {useNavigate} from "react-router-dom";
 import styled from '@emotion/styled';
 
 function AddSupplier() {
-    const [addSupplier, setAddSupplier] = React.useState({
-        companyName: '',
-        contactName: '',
-        contactTitle: '',
-        address:{
-            city: '',
-            country: '',
-            phone: '',
-        },
-    });
-    const navigate = useNavigate()
+  const [addSupplier, setAddSupplier] = React.useState({
+    companyName: '',
+    contactName: '',
+    contactTitle: '',
+    address:{
+        city: '',
+        country: '',
+        phone: '',
+    },
+  });
+  const navigate = useNavigate()
 
-    async function handleAdd(){
-        await axios.post('https://northwind.vercel.app/api/suppliers', addSupplier)
-        navigate(`/`)
+  async function handleAdd(){
+    if(addSupplier.companyName!=='' && addSupplier.contactName!=='' && addSupplier.contactTitle!=='' && addSupplier.address!=={}){
+      await axios.post('https://northwind.vercel.app/api/suppliers', addSupplier)
+      navigate(`/`)
     }
+    else{
+      alert('POST cannot be empity');
+    }
+  }
 
-    return (
-        <Container>
-            <HeadDiv>
-                <button onClick={() => navigate(-1)}>Back</button>
-                <h2>Add Supplier</h2>
-            </HeadDiv>
-            <Div>
-                <input placeholder='Company name' onChange={(e) => setAddSupplier({
-                    ...addSupplier,
-                    companyName: e.target.value
-                })}/>
-                <input placeholder='Contact name' onChange={(e) => setAddSupplier({
-                    ...addSupplier,
-                    contactName: e.target.value
-                })}/>
-                <input placeholder='Contact Title' onChange={(e) => setAddSupplier({
-                    ...addSupplier,
-                    contactTitle: e.target.value
-                })}/>
-                <input placeholder='City' onChange={(e) => setAddSupplier({
-                    ...addSupplier,
-                    address:{...addSupplier.address, city: e.target.value}
-                })}/>
-                <input placeholder='Country' onChange={(e) => setAddSupplier({
-                    ...addSupplier,
-                    address:{...addSupplier.address, country: e.target.value}
-                })}/>
-                <input placeholder='Phone Number' onChange={(e) => setAddSupplier({
-                    ...addSupplier,
-                    address:{...addSupplier.address, phone: e.target.value}
-                })}/>
-                <Button onClick={handleAdd}>Add</Button>
-            </Div>
-        </Container>
-    );
+  return (
+    <Container>
+        <HeadDiv>
+            <button onClick={() => navigate(-1)}>Back</button>
+            <h2>Add Supplier</h2>
+        </HeadDiv>
+        <Div>
+            <input placeholder='Company name' onChange={(e) => setAddSupplier({
+                ...addSupplier,
+                companyName: e.target.value
+            })}/>
+            <input placeholder='Contact name' onChange={(e) => setAddSupplier({
+                ...addSupplier,
+                contactName: e.target.value
+            })}/>
+            <input placeholder='Contact Title' onChange={(e) => setAddSupplier({
+                ...addSupplier,
+                contactTitle: e.target.value
+            })}/>
+            <input placeholder='City' onChange={(e) => setAddSupplier({
+                ...addSupplier,
+                address:{...addSupplier.address, city: e.target.value}
+            })}/>
+            <input placeholder='Country' onChange={(e) => setAddSupplier({
+                ...addSupplier,
+                address:{...addSupplier.address, country: e.target.value}
+            })}/>
+            <input placeholder='Phone Number' onChange={(e) => setAddSupplier({
+                ...addSupplier,
+                address:{...addSupplier.address, phone: e.target.value}
+            })}/>
+            <Button onClick={handleAdd}>Add</Button>
+        </Div>
+    </Container>
+  );
 }
 
 export default AddSupplier;
